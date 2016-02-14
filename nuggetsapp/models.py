@@ -13,3 +13,12 @@ class Nugget(models.Model):
 
     def __str__(self):
         return self.text
+        
+class Nugget_User(models.Model):
+    user = models.ForeignKey('auth.User')
+    nugget = models.ForeignKey('Nugget', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
+    is_owner = models.BooleanField()
+    is_deleted = models.BooleanField()
+    
