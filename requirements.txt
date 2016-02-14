@@ -5,3 +5,6 @@ psycopg2==2.6.1
 wheel==0.29.0
 whitenoise==2.0.6
 South==1.0
+
+bcrypt$$2a$10$uRlgndLC8AAatxTKV9n.R.7zO98LNLyhZMdl8jmPdLFYga80gtu82
+bcrypt$$2b$12$LEw1wsZiY5z6nJ9NHp.couCPENZ72aHJfvKBpU2xjxd/tzKjnejMu
