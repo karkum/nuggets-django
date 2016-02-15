@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'^login$', views.login, name='login'),
     url(r'^add-nugget$', views.add_nugget, name='add-nugget'),
     url(r'^add-nugget-post$', views.add_nugget_post),
-    #url(r'^my-nuggets$', views.my_nuggets, name='my-nuggets'),
+    url(r'^my-nuggets$', views.my_nuggets, name='my-nuggets'),
 ]

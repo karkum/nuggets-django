@@ -34,3 +34,8 @@ def add_nugget_post(request):
     logger.info('user %s, text %s, tags %s, source %s' % (user, text, tags, source))
     nugget = Nugget.create_new_nugget(user, text, tags, source)
     return render(request, 'nuggetsapp/add-nugget.html', {'nugget': nugget})
+
+@login_required
+def my_nuggets(request):
+    nuggets = Nugget.get_nuggets_by_user(request.user)
+    return render(request, 'nuggetsapp/my-nuggets.html', {'nuggets': nuggets})
