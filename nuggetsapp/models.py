@@ -34,10 +34,11 @@ class Nugget(models.Model):
 
 
 class Nugget_User(models.Model):
-    nugget = models.ForeignKey(Nugget)
+    nugget = models.ForeignKey(Nugget, on_delete=models.CASCADE)
     user = models.ForeignKey('auth.User')
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
+    is_owner = models.BooleanField()
     is_deleted = models.BooleanField()
 
     @classmethod
