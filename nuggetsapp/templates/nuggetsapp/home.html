@@ -1,3 +1,5 @@
+{% extends "nuggetsapp/templates/base.html" %}
+{% block content %}
 <h1>Hello Nugget World!</h1>
 <h2>Login</h2>
 <form method="post" action="/login">
@@ -9,3 +11,4 @@
 {% if status == "success" %}
     User: {{ request.user.username }}, password: {{ request.user.password }}
 {% endif %}
+{% endblock %}

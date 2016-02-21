@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Nuggets</title>
+    <link rel="icon" type="image/x-icon" href="/static/img/nuggets_logo_notext.png">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/styling.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width" />
+    {% block head_javascript %}{% endblock %}
+    {% block head_css %}{% endblock %}
+  </head>
+  <body id="extension-body">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <img src="/static/img/nuggets_logo_notext.png" class="pull-left navbar-icon"/>
+        <span class="brand">{% block title %}My nuggets{% endblock %}</span>
+        <a href="/">Home/Login</a> | 
+        <a href="/my-nuggets">My Nuggets</a> | 
+        <a href="/add-nugget">Add Nugget</a>
+      </div>
+    </div>
+    <div id="extension-container">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
+

@@ -1,8 +1,95 @@
+{% extends "nuggetsapp/templates/base.html" %}
+{% block content %}
 <h1>Hello Nugget World!</h1>
 <h2>My Nuggets</h2>
-{% for nugget in nuggets %}
-Text: {{ nugget.text }}<br>
-Tags: {{ nugget.tags }}<br>
-Source: {{ nugget.source }}<br>
-<br>
-{% endfor %}
+
+<div class="row-fluid">
+<div id="my-nuggets-table" class="">
+  <div class="span4">
+    {% for nugget in nuggets %}
+    <div class="row-fluid f3">
+      <div class="nugget-wrapper" id="g1">
+        <div id="{{ nugget.id }}" class="nugget-content">
+          <p>{{ nugget.text }} {{ nugget.source }} {{ nugget.tags }}</p>
+          <div class="nugget-source-section">
+            <div class="nugget-source-link">
+              <a href="{{ nugget.url }}">{{ nugget.source }}</a>
+            </div>
+          </div>
+          <div class="nugget-tag-section">
+            <span class="nugget-tag">#{{ nugget.tags }}</span>
+          </div>
+          <div class="row-fluid nugget-time-ago">
+            <span>11 days ago</span>
+          </div>
+        </div>
+        <div class="nugget-toolbar">
+          <span class="span1 fa nugget-action-icons">
+            <span class="nugget-action-icons-left">
+              <a class="fa-link nugget-action-icon" style="color:white" target="_blank" href="https://stratechery.com/2016/the-reality-of-missing-out/"></a>
+              <a class="fa-twitter nugget-action-icon" style="color:white" target="_blank" href="https://twitter.com/intent/tweet?text=The%20issue%20for%20LinkedIn%20is%20that%20a%20company%E2%80%99s%20stock%20price%20is%20not%20a%20scorecard%3B%20rather%20it%20is%20the%20marke...%20via%20%40nuggetsapp&amp;url=https%3A%2F%2Fstratechery.com%2F2016%2Fthe-reality-of-missing-out%2F&amp;short_url_length=24"></a>
+            </span>
+            <span class="nugget-action-icons-right"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="span4">
+    <div class="row-fluid f3">
+      <div class="nugget-wrapper" id="g1">
+        <div id="DjoPMMdqJd" class="nugget-content">
+          <p>The issue for LinkedIn is that a company’s stock price is not a scorecard; rather it is the market’s estimate of a company’s future earnings</p>
+          <div class="nugget-source-section">
+            <div class="nugget-source-link">
+              <a href="https://stratechery.com/2016/the-reality-of-missing-out/">The Reality of Missing Out - Stratechery by Ben Thompson</a>
+            </div>
+          </div>
+          <div class="nugget-tag-section"></div>
+          <div class="row-fluid nugget-time-ago">
+            <span>11 days ago</span>
+          </div>
+        </div>
+        <div class="nugget-toolbar">
+          <span class="span1 fa nugget-action-icons">
+            <span class="nugget-action-icons-left">
+              <a class="fa-link nugget-action-icon" style="color:white" target="_blank" href="https://stratechery.com/2016/the-reality-of-missing-out/"></a>
+              <a class="fa-twitter nugget-action-icon" style="color:white" target="_blank" href="https://twitter.com/intent/tweet?text=The%20issue%20for%20LinkedIn%20is%20that%20a%20company%E2%80%99s%20stock%20price%20is%20not%20a%20scorecard%3B%20rather%20it%20is%20the%20marke...%20via%20%40nuggetsapp&amp;url=https%3A%2F%2Fstratechery.com%2F2016%2Fthe-reality-of-missing-out%2F&amp;short_url_length=24"></a>
+            </span>
+            <span class="nugget-action-icons-right"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span4">
+    <div class="row-fluid f3">
+      <div class="nugget-wrapper" id="g1">
+        <div id="DjoPMMdqJd" class="nugget-content">
+          <p>The issue for LinkedIn is that a company’s stock price is not a scorecard; rather it is the market’s estimate of a company’s future earnings</p>
+          <div class="nugget-source-section">
+            <div class="nugget-source-link">
+              <a href="https://stratechery.com/2016/the-reality-of-missing-out/">The Reality of Missing Out - Stratechery by Ben Thompson</a>
+            </div>
+          </div>
+          <div class="nugget-tag-section"></div>
+          <div class="row-fluid nugget-time-ago">
+            <span>11 days ago</span>
+          </div>
+        </div>
+        <div class="nugget-toolbar">
+          <span class="span1 fa nugget-action-icons">
+            <span class="nugget-action-icons-left">
+              <a class="fa-link nugget-action-icon" style="color:white" target="_blank" href="https://stratechery.com/2016/the-reality-of-missing-out/"></a>
+              <a class="fa-twitter nugget-action-icon" style="color:white" target="_blank" href="https://twitter.com/intent/tweet?text=The%20issue%20for%20LinkedIn%20is%20that%20a%20company%E2%80%99s%20stock%20price%20is%20not%20a%20scorecard%3B%20rather%20it%20is%20the%20marke...%20via%20%40nuggetsapp&amp;url=https%3A%2F%2Fstratechery.com%2F2016%2Fthe-reality-of-missing-out%2F&amp;short_url_length=24"></a>
+            </span>
+            <span class="nugget-action-icons-right"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
