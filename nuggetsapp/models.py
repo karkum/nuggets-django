@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db.models import Q
+from utils import date_for_x_days_before_today
 
 class Nugget(models.Model):
     owner = models.ForeignKey('auth.User')
@@ -16,8 +18,12 @@ class Nugget(models.Model):
         return self.text
 
     @classmethod
-    def get_nuggets_by_user(cls, user):
-        return Nugget_User.get_nuggets_by_user(user)
+    def get_nuggets_by_user(cls, user, exclude_deleted =True)
+        return [x.nugget for x in Nugget_User.get_nugget_users_by_user(user, exclude_deleted)] 
+        
+    @classmethod
+    def get_todays_review_nuggets_by_user(cls, user, exclude_deleted =True)
+        return [x.nugget for x in Nugget_User.get_todays_review_nugget_users_by_user(user, exclude_deleted)] 
 
     @classmethod
     def create_new_nugget(cls, user, text, tags, source):
@@ -58,6 +64,16 @@ class Nugget_User(models.Model):
                 is_deleted=False)
 
     @classmethod
-    def get_nuggets_by_user(cls, user):
-        return [x.nugget for x in cls.objects.filter(user = user)]
+    def get_nugget_users_by_user(cls, user, exclude_deleted =True):
+        q_objects = Q(user = user)
+        q_objects.add(Q(is_deleted = False), Q.AND) if exclude_deleted
+        return cls.objects.filter(q_objects)
+                
+    @classmethod
+    def get_todays_review_nugget_users_by_user(cls, user, exclude_deleted =True):
+        review_interval_days = [1, 3, 7, 14, 30, 90, 180, 360, 720]
+        review_dates = [date_for_x_days_before_today(n) for n in review_interval_days]
+        q_objects = Q(user = user) & Q(created_at__date__in = review_dates) #__date casts the datetime value as date
+        q_objects.add(Q(is_deleted = False), Q.AND) if exclude_deleted
+        return cls.objects.filter(q_objects)
 
