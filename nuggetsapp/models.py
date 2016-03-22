@@ -73,7 +73,7 @@ class Nugget_User(models.Model):
     def get_todays_review_nugget_users_by_user(cls, user, exclude_deleted =True):
         review_interval_days = [1, 3, 7, 14, 30, 90, 180, 360, 720]
         review_dates = [date_for_x_days_before_today(n) for n in review_interval_days]
-        q_objects = Q(user = user) & Q(created_at__date__in = review_dates)
+        q_objects = Q(user = user) & Q(created_at__date__in = review_dates) #__date casts the datetime value as date
         q_objects.add(Q(is_deleted = False), Q.AND) if exclude_deleted
         return cls.objects.filter(q_objects)
-     
+
