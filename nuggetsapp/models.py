@@ -20,11 +20,11 @@ class Nugget(models.Model):
 
     @classmethod
     def get_nuggets_by_user(cls, user):
-        return Nugget_User.get_nuggets_by_user(user)
+        return [x.nugget for x in Nugget_User.get_nugget_users_by_user(user)] 
         
     @classmethod
     def get_todays_review_nuggets_by_user(cls, user):
-        return Nugget_User.get_todays_review_nuggets_by_user(user)
+        return [x.nugget for x in Nugget_User.get_todays_review_nugget_users_by_user(user)] 
 
     @classmethod
     def create_new_nugget(cls, user, text, tags, source):
@@ -65,14 +65,18 @@ class Nugget_User(models.Model):
                 is_deleted=False)
 
     @classmethod
-    def get_nuggets_by_user(cls, user):
-        return [x.nugget for x in cls.objects.filter(Q(user = user) & Q(is_deleted = False))]
+    def get_nugget_users_by_user(cls, user, exclude_deleted = True):
+        q_objects = Q(user = user)
+        q_objects.add(Q(is_deleted = False), Q.AND) if exclude_deleted
+        return cls.objects.filter(q_objects)
                 
     @classmethod
-    def get_todays_review_nuggets_by_user(cls, user):
+    def get_todays_review_nugget_users_by_user(cls, user, exclude_deleted = True):
         review_interval_days = [1, 3, 7, 14, 30, 90, 180, 360, 720]
-        review_dates = [date_for_days_from_today(n) for n in review_interval_days]
-        return [x.nugget for x in  cls.objects.filter(Q(user = user) & Q(is_deleted = False) & Q(created_at__date__in = review_dates))]
+        review_dates = [date_for_x_days_before_today(n) for n in review_interval_days]
+        q_objects = Q(user = user) & Q(created_at__date__in = review_dates)
+        q_objects.add(Q(is_deleted = False), Q.AND) if exclude_deleted
+        return cls.objects.filter(q_objects)
      
     
 
