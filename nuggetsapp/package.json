@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "server": "webpack-dev-server",
+    "watch": "webpack --watch",
     "prod": "webpack -p"
   },
   "author": "Nathan Chan",
