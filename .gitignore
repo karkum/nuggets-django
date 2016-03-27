@@ -6,3 +6,4 @@ staticfiles
 *.swo
 *.swp
 node_modules/
+build/

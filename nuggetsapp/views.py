@@ -39,3 +39,6 @@ def add_nugget_post(request):
 def my_nuggets(request):
     nuggets = Nugget.get_nuggets_by_user(request.user)
     return render(request, 'nuggetsapp/my-nuggets.html', {'nuggets': nuggets})
+
+def react(request):
+    return render(request, 'nuggetsapp/index.html', {})
