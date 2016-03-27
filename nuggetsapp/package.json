@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf ./static/build/",
     "server": "webpack-dev-server",
-    "watch": "webpack --watch",
-    "prod": "webpack -p"
+    "watch": "npm run clean && webpack --watch",
+    "start": "npm run watch",
+    "prod": "npm run clean && webpack -p",
+    "make": "npm run prod"
   },
   "author": "Nathan Chan",
   "license": "ISC",
