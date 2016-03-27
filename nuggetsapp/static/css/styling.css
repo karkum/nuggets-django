@@ -33,23 +33,6 @@
     margin-top: 5px;
 }
 
-
-
-.backgroundOne {
-    background-image: url('background.png');
-    background-repeat: repeat;
-    background-repeat: repeat; 
-    opacity: .35;
-    width: 100%; 
-    height: 100%; 
-     position: absolute;
-    z-index: -1;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
 #extension-container {
     margin-top: 60px;
 }
