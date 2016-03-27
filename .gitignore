@@ -5,3 +5,4 @@ bin
 staticfiles
 *.swo
 *.swp
+node_modules/
