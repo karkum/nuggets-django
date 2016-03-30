@@ -12,6 +12,11 @@
 </head>
 <body>
   <div id="app"></div>
+  <script>
+    window.nuggets = {
+      app_state: {{ app_state | safe }}
+    }
+  </script>
   <script src="/static/build/index_bundle.js"></script>
 </body>
 </html>

@@ -1,12 +1,15 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login as auth_login
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from nuggetsapp.models import Nugget
+import json
 import logging
 logger = logging.getLogger(__name__)
 
 def home(request):
-    return render(request, 'nuggetsapp/home.html', {})
+    next_url = request.GET.get('next')
+    return render(request, 'nuggetsapp/home.html', {'next_url': next_url})
 
 def login(request):
     username = request.POST['username']
@@ -15,11 +18,18 @@ def login(request):
     if user is not None:
         if user.is_active:
             auth_login(request, user)
+            next_url = request.POST.get('next_url')
+            if next_url:
+                return redirect(next_url)
             return render(request, 'nuggetsapp/home.html', {'status': 'success'})
         else:
             return render(request, 'nuggetsapp/home.html', {'status': 'inactive'})
     else:
         return render(request, 'nuggetsapp/home.html', {'status': 'invalid'})
+
+def logout(request):
+    auth_logout(request)
+    return redirect('/')
 
 @login_required
 def add_nugget(request):
@@ -40,5 +50,21 @@ def my_nuggets(request):
     nuggets = Nugget.get_nuggets_by_user(request.user)
     return render(request, 'nuggetsapp/my-nuggets.html', {'nuggets': nuggets})
 
+@login_required
+def get_my_nuggets(request):
+    from django.core import serializers # we should probably use something like http://www.django-rest-framework.org/api-guide/serializers/
+    nuggets = Nugget.get_nuggets_by_user(request.user)
+    return HttpResponse(json.dumps([nugget['fields'] for nugget in json.loads(serializers.serialize('json', nuggets))]))
+
+@login_required
 def react(request):
-    return render(request, 'nuggetsapp/index.html', {})
+    app_state = {}
+    app_state['user'] = {
+        'username': request.user.get_username(),
+        'is_authenticated': request.user.is_authenticated(),
+        'is_active': request.user.is_active,
+        'email': request.user.email,
+        'id': request.user.id,
+        'full_name': request.user.get_full_name()
+    }
+    return render(request, 'nuggetsapp/index.html', {'app_state': json.dumps(app_state)})

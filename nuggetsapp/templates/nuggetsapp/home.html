@@ -3,8 +3,11 @@
 <h1>Hello Nugget World!</h1>
 <h2>Login</h2>
 <form method="post" action="/login">
+    {% if next_url %}
+    <input name="next_url" type="hidden" value="{{ next_url }}"/>
+    {% endif %}
     Username: <input name="username" type="text"/><br>
-    Password: <input name="password" type="text"/><br>
+    Password: <input name="password" type="password"/><br>
     <input type="submit" value="Submit">
 </form>
 {{ status }}

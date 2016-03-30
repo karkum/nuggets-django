@@ -17,7 +17,12 @@
         <span class="brand">{% block title %}My nuggets{% endblock %}</span>
         <a href="/">Home/Login</a> | 
         <a href="/my-nuggets">My Nuggets</a> | 
-        <a href="/add-nugget">Add Nugget</a>
+        <a href="/add-nugget">Add Nugget</a> | 
+        <a href="/logout">Logout</a> | 
+        <a href="/react">REACT!</a> | 
+        {% if request.user.username %}
+        (Logged in as {{ request.user.username }})
+        {% endif %}
       </div>
     </div>
     <div id="extension-container">
