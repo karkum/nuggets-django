@@ -11,7 +11,6 @@ var MyNuggetsContainer = React.createClass({
     }
   },
   componentDidMount: function () {
-    setTimeout(function(){
     axios.get("/get-my-nuggets")
       .then(function(json) {
         console.log(json);
@@ -23,7 +22,6 @@ var MyNuggetsContainer = React.createClass({
       .catch(function(err) {
         console.warn(err);
       })
-    }.bind(this), 2000);
   },
   render: function () {
     return (

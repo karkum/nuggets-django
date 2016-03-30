@@ -1,6 +1,16 @@
 {% extends "nuggetsapp/templates/base.html" %}
 {% block content %}
 <h1>Hello Nugget World!</h1>
+
+<h2>Create an account</h2>
+<form method="post" action="/signup">
+    {% if next_url %}
+    <input name="next_url" type="hidden" value="{{ next_url }}"/>
+    {% endif %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
 <h2>Login</h2>
 <form method="post" action="/login">
     {% if next_url %}

@@ -13,7 +13,19 @@ var Navbar = React.createClass({
         <div className="navbar-inner">
           <img src="/static/img/nuggets_logo_notext.png" className="pull-left navbar-icon"/>
           <span className="brand">Nuggets</span>
-          {this.props.username}
+          
+          DJANGO: &nbsp;
+          <a href="/">Home/Login</a> | &nbsp;
+          <a href="/my-nuggets">My Nuggets</a> | &nbsp;
+          <a href="/add-nugget">Add Nugget</a> | &nbsp;
+          <a href="/logout">Logout</a> | &nbsp;
+          <br></br>
+          REACT: &nbsp;
+          <a href="/react">Home</a> | &nbsp;
+          <a href="/react#/myNuggets">My Nuggets</a> | &nbsp;
+          <br></br>
+          (Logged in as {this.props.username})
+
           <div className="navbar-dropdown">
             <div className="btn-group pull-right">
               <button className="btn btn-small dropdown-toggle" data-toggle="dropdown" tabIndex="-1"><i className="icon-th-list"></i></button>

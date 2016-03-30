@@ -1,3 +1,5 @@
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -9,7 +11,31 @@ logger = logging.getLogger(__name__)
 
 def home(request):
     next_url = request.GET.get('next')
-    return render(request, 'nuggetsapp/home.html', {'next_url': next_url})
+    return render(request,
+                  'nuggetsapp/home.html',
+                  {
+                      'next_url': next_url,
+                      'form': UserCreationForm()
+                  })
+
+def signup(request):
+    next_url = request.POST.get('next_url')
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+        new_user = form.save()
+        new_user = authenticate(username=form.cleaned_data['username'],
+                                password=form.cleaned_data['password1'])
+        auth_login(request, new_user)
+        if next_url:
+            return redirect(next_url)
+        return redirect('/react')
+    else:
+        return render(request,
+                      'nuggetsapp/home.html',
+                      {
+                          'next_url': next_url,
+                          'form': UserCreationForm()
+                      })
 
 def login(request):
     username = request.POST['username']
@@ -21,7 +47,7 @@ def login(request):
             next_url = request.POST.get('next_url')
             if next_url:
                 return redirect(next_url)
-            return render(request, 'nuggetsapp/home.html', {'status': 'success'})
+            return redirect('/react')
         else:
             return render(request, 'nuggetsapp/home.html', {'status': 'inactive'})
     else:
