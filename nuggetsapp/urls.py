@@ -9,6 +9,9 @@ urlpatterns = [
     url(r'^add-nugget$', views.add_nugget, name='add-nugget'),
     url(r'^add-nugget-post$', views.add_nugget_post),
     url(r'^my-nuggets$', views.my_nuggets, name='my-nuggets'),
-    url(r'^get-my-nuggets$', views.get_my_nuggets, name='get-my-nuggets'),
+    # APIs
+    url(r'^api/get-my-nuggets$', views.api_get_my_nuggets, name='api-get-my-nuggets'),
+    url(r'^api/add-nugget$', views.api_add_nugget, name='api-add-nugget'),
+    # React entry-point
     url(r'^react$', views.react, name='react')
 ]

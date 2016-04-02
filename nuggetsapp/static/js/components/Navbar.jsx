@@ -23,6 +23,7 @@ var Navbar = React.createClass({
           REACT: &nbsp;
           <a href="/react">Home</a> | &nbsp;
           <a href="/react#/myNuggets">My Nuggets</a> | &nbsp;
+          <a href="/react#/addNugget">Add Nugget</a> | &nbsp;
           <br></br>
           (Logged in as {this.props.username})
 

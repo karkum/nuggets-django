@@ -6,12 +6,11 @@ var NuggetCard = require('../components/NuggetCard')
 var MyNuggetsContainer = React.createClass({
   getInitialState: function () {
     return {
-      username: window.nuggets.app_state.user.full_name,
       my_nuggets: []
     }
   },
   componentDidMount: function () {
-    axios.get("/get-my-nuggets")
+    axios.get("/api/get-my-nuggets")
       .then(function(json) {
         console.log(json);
         this.setState({
@@ -30,7 +29,7 @@ var MyNuggetsContainer = React.createClass({
           <div id="profile-header" className="">
             <div className="jumbotron">
               <div className="backgroundOne"> </div>
-              <h1><span id="displayname">{this.state.username}</span></h1>
+              <h1><span id="displayname">{window.nuggets.app_state.user.full_name}</span></h1>
               <p><span id="tagline">super user of Nuggets, avid learner</span></p>
             </div>
           </div>
@@ -47,10 +46,8 @@ var MyNuggetsContainer = React.createClass({
   }
 });
 
-{/*}
-
             
-            
+{/*}            
 MyNuggetsContainer.propTypes = {
   shows: React.PropTypes.arrayOf(React.PropTypes.object),
   searchTerm: React.PropTypes.string

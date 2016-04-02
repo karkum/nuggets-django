@@ -77,10 +77,20 @@ def my_nuggets(request):
     return render(request, 'nuggetsapp/my-nuggets.html', {'nuggets': nuggets})
 
 @login_required
-def get_my_nuggets(request):
+def api_get_my_nuggets(request):
     from django.core import serializers # we should probably use something like http://www.django-rest-framework.org/api-guide/serializers/
     nuggets = Nugget.get_nuggets_by_user(request.user)
     return HttpResponse(json.dumps([nugget['fields'] for nugget in json.loads(serializers.serialize('json', nuggets))]))
+
+@login_required
+def api_add_nugget(request):
+    from django.core import serializers # we should probably use something like http://www.django-rest-framework.org/api-guide/serializers/
+    data = json.loads(request.body)
+    text = data.get('text')
+    tags = data.get('tags')
+    source = data.get('source')
+    nugget = Nugget.create_new_nugget(request.user, text, tags, source)
+    return HttpResponse(json.dumps(json.loads(serializers.serialize('json', [nugget]))[0]['fields']))
 
 @login_required
 def react(request):
