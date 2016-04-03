@@ -1,13 +1,20 @@
 var React = require('react')
 var axios = require('axios');
 var MainContainer = require('../containers/MainContainer');
+var Search = require('../components/Search')
 var NuggetCard = require('../components/NuggetCard')
 
 var MyNuggetsContainer = React.createClass({
   getInitialState: function () {
     return {
-      my_nuggets: []
+      my_nuggets: [],
+      searchText: ''
     }
+  },
+  handleSearchUpdate: function (e) {
+    this.setState({
+      searchText: e.target.value
+    });
   },
   componentDidMount: function () {
     axios.get("/api/get-my-nuggets")
@@ -33,8 +40,14 @@ var MyNuggetsContainer = React.createClass({
               <p><span id="tagline">super user of Nuggets, avid learner</span></p>
             </div>
           </div>
+          <Search onSearchUpdate={this.handleSearchUpdate} searchText={this.state.searchText} />
           <div id="my-nuggets-table">
             {this.state.my_nuggets
+              .filter(function(nugget) {
+                if (!this.state.searchText || (nugget.text + " " + nugget.tags + " " + nugget.source).toLowerCase().indexOf(this.state.searchText.toLowerCase()) >= 0) {
+                  return nugget;
+                }
+              }.bind(this))
               .map(function(nugget) {
                 return (<NuggetCard {...nugget} key={nugget.id} />)
               })

@@ -1,5 +1,5 @@
 var React = require('react');
-var NavbarContainer = require('../containers/NavbarContainer');
+var Navbar = require('../components/Navbar');
 {/*
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 require('../main.css');
@@ -7,10 +7,9 @@ require('../main.css');
 
 var Main = React.createClass({
   render: function () {
-    console.log(window.nuggets.app_state.user.username + " " + window.nuggets.app_state.user.email);
     return (
       <div className='full-container'>
-        <NavbarContainer/>
+        <Navbar />
       {/*        <ReactCSSTransitionGroup
           transitionName="appear"
           transitionEnterTimeout={500}
