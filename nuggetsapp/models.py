@@ -18,8 +18,8 @@ class Nugget(models.Model):
         return self.text
 
     @classmethod
-    def get_nuggets_by_user(cls, user, exclude_deleted=True):
-        return [x.nugget for x in Nugget_User.get_nugget_users_by_user(user, exclude_deleted)]
+    def get_nuggets_by_user(cls, user_id, exclude_deleted=True):
+        return [x.nugget for x in Nugget_User.get_nugget_users_by_user(user_id, exclude_deleted)]
 
     @classmethod
     def get_todays_review_nuggets_by_user(cls, user, exclude_deleted=True):
@@ -46,6 +46,10 @@ class Nugget(models.Model):
                 user = user,
                 is_owner = is_owner)
 
+    @property
+    def owner_name(self):
+        return self.owner.username
+
 
 class Nugget_User(models.Model):
     nugget = models.ForeignKey(Nugget, on_delete=models.CASCADE)
@@ -64,8 +68,9 @@ class Nugget_User(models.Model):
                 is_deleted=False)
 
     @classmethod
-    def get_nugget_users_by_user(cls, user, exclude_deleted =True):
-        q_objects = Q(user = user)
+    def get_nugget_users_by_user(cls, user_id, exclude_deleted =True):
+        user = User.objects.get(id=user_id)
+        q_objects = Q(user=user)
         if exclude_deleted:
             q_objects.add(Q(is_deleted = False), Q.AND)
         return cls.objects.filter(q_objects)
