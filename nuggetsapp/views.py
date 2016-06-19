@@ -1,10 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from nuggetsapp.models import Nugget
-from nuggetsapp.serializers import NuggetSerializer
 import logging
 logger = logging.getLogger(__name__)
 
@@ -43,8 +40,3 @@ def my_nuggets(request):
     nuggets = Nugget.get_nuggets_by_user(request.user.id)
     return render(request, 'nuggetsapp/my-nuggets.html', {'nuggets': nuggets})
 
-@api_view(['GET'])
-def nuggets_for_user(request, user_id):
-    nuggets = Nugget.get_nuggets_by_user(user_id)
-    serializer = NuggetSerializer(nuggets, many=True)
-    return Response(serializer.data)
