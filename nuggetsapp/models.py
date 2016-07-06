@@ -5,6 +5,8 @@ from django.db.models import Q
 from utils import date_for_x_days_before_today
 
 class Nugget(models.Model):
+    MAX_TEXT_SIZE = 200
+
     owner = models.ForeignKey('auth.User')
     text = models.CharField(max_length=200)
     source = models.TextField()
@@ -18,8 +20,8 @@ class Nugget(models.Model):
         return self.text
 
     @classmethod
-    def get_nuggets_by_user(cls, user_id, exclude_deleted=True):
-        return [x.nugget for x in Nugget_User.get_nugget_users_by_user(user_id, exclude_deleted)]
+    def get_nuggets_by_user(cls, user, exclude_deleted=True):
+        return [x.nugget for x in Nugget_User.get_nugget_users_by_user(user, exclude_deleted)]
 
     @classmethod
     def get_todays_review_nuggets_by_user(cls, user, exclude_deleted=True):
@@ -38,6 +40,15 @@ class Nugget(models.Model):
                 user = user,
                 is_owner = True)
         return nugget
+
+    @classmethod
+    def delete_nugget(cls, user, nugget):
+        Nugget_User.delete_nugget_user(user, nugget)
+        Nugget.objects.filter(id = nugget.id).update(is_deleted = True)
+
+    @classmethod
+    def update_nugget(clsc, user, nugget, new_nugget_text):
+        Nugget.objects.filter(id = nugget.id, owner = user).update(text = new_nugget_text)
 
     @classmethod
     def add_existing_nugget(cls, nugget, user, is_owner=False):
@@ -68,8 +79,7 @@ class Nugget_User(models.Model):
                 is_deleted=False)
 
     @classmethod
-    def get_nugget_users_by_user(cls, user_id, exclude_deleted =True):
-        user = User.objects.get(id=user_id)
+    def get_nugget_users_by_user(cls, user, exclude_deleted =True):
         q_objects = Q(user=user)
         if exclude_deleted:
             q_objects.add(Q(is_deleted = False), Q.AND)
@@ -84,3 +94,6 @@ class Nugget_User(models.Model):
             q_objects.add(Q(is_deleted = False), Q.AND)
         return cls.objects.filter(q_objects)
 
+    @classmethod
+    def delete_nugget_user(cls, user, nugget):
+        Nugget_User.objects.filter(user = user, nugget = nugget).update(is_deleted = True)
