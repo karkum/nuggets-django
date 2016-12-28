@@ -36,7 +36,7 @@
 
 
 .backgroundOne {
-    background-image: url('background.png');
+    background-image: url('../img/background.png');
     background-repeat: repeat;
     background-repeat: repeat; 
     opacity: .35;
