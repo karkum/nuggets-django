@@ -11,3 +11,8 @@ class NuggetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Nugget
         fields = ('id', 'owner_name', 'source', 'text', 'url', 'tags', 'created_at', 'updated_at', 'is_deleted')
+
+class PublicNuggetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Nugget
+        fields = ('id', 'source', 'text', 'url', 'tags')
