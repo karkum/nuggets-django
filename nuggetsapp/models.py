@@ -24,6 +24,13 @@ class Nugget(models.Model):
         return [x.nugget for x in Nugget_User.get_nugget_users_by_user(user, exclude_deleted)]
 
     @classmethod
+    def get_nuggets_by_url(cls, url, limit, exclude_deleted=True):
+        q_objects = Q(url=url)
+        if exclude_deleted:
+            q_objects.add(Q(is_deleted=False), Q.AND)
+        return cls.objects.filter(q_objects)[:limit]
+
+    @classmethod
     def get_todays_review_nuggets_by_user(cls, user, exclude_deleted=True):
         return [x.nugget for x in Nugget_User.get_todays_review_nugget_users_by_user(user, exclude_deleted)]
 

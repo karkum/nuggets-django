@@ -1,5 +1,5 @@
-from nuggetsapp.serializers import NuggetSerializer
-from rest_framework.decorators import api_view
+from nuggetsapp.serializers import NuggetSerializer, PublicNuggetSerializer
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework import status
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -23,6 +23,16 @@ def nuggets_op_by_user(request, user_id):
             Nugget.create_new_nugget(user, serializer.validated_data['text'], serializer.validated_data['tags'], serializer.validated_data['source'])
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def nuggets_op_by_url(request):
+    url = request.GET.get('url')
+    limit = request.GET.get('limit')
+    nuggets = Nugget.get_nuggets_by_url(url, limit)
+    serializer = PublicNuggetSerializer(nuggets, many=True)
+    return Response(serializer.data)
 
 @api_view(['DELETE', 'PUT', 'GET'])
 def nuggets_op_by_user_and_nugget(request, user_id, nugget_id):
