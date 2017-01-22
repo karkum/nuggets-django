@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from nuggetsapp.models import Nugget
+from django.http import HttpResponse
+import json
 
 @api_view(['GET', 'POST'])
 def nuggets_op_by_user(request, user_id):
@@ -24,6 +26,7 @@ def nuggets_op_by_user(request, user_id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])
@@ -33,6 +36,23 @@ def nuggets_op_by_url(request):
     nuggets = Nugget.get_nuggets_by_url(url, limit)
     serializer = PublicNuggetSerializer(nuggets, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([])
+def create_new_user(request):
+    post_data = json.loads(request.body)
+    username = post_data['username']
+    password = post_data['password']
+    email = post_data['email']
+    displayname = post_data['displayname']
+    user = User.objects.create_user(username=username,
+                                    email=password,
+                                    password=email,
+                                    first_name=displayname)
+    return HttpResponse(status=204)
+
 
 @api_view(['DELETE', 'PUT', 'GET'])
 def nuggets_op_by_user_and_nugget(request, user_id, nugget_id):
