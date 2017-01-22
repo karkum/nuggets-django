@@ -2,10 +2,9 @@ from nuggetsapp.serializers import NuggetSerializer, PublicNuggetSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from nuggetsapp.models import Nugget
-from django.http import HttpResponse
-import json
 
 @api_view(['GET', 'POST'])
 def nuggets_op_by_user(request, user_id):
@@ -50,7 +49,8 @@ def create_new_user(request):
                                     email=password,
                                     password=email,
                                     first_name=displayname)
-    return HttpResponse(status=204)
+    token, created = Token.objects.get_or_create(user=user)
+    return Response({'token': token.key, 'userId': user.id})
 
 
 @api_view(['DELETE', 'PUT', 'GET'])
