@@ -42,11 +42,10 @@ def nuggets_op_by_url(request):
 @authentication_classes([])
 @permission_classes([])
 def create_new_user(request):
-    post_data = json.loads(request.body)
-    username = post_data['username']
-    password = post_data['password']
-    email = post_data['email']
-    displayname = post_data['displayname']
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    email = request.POST.get('email')
+    displayname = request.POST.get('displayname')
     user = User.objects.create_user(username=username,
                                     email=password,
                                     password=email,
